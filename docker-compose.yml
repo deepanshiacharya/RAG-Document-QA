@@ -1,0 +1,54 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    # healthcheck:  # Disabled to avoid failures due to missing tools
+    #   test: ["CMD", "nc", "-z", "localhost", "11434"]
+    #   interval: 60s
+    #   timeout: 20s
+    #   retries: 5
+
+  fastapi:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
+      - VECTOR_DB_PATH=${VECTOR_DB_PATH}
+      - LLM_MODEL=${LLM_MODEL}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - MAX_DOCS=${MAX_DOCS}
+      - MAX_PAGES_PER_DOC=${MAX_PAGES_PER_DOC}
+      - CHUNK_SIZE=${CHUNK_SIZE}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP}
+    volumes:
+      - app_data:/app/data
+    depends_on:
+      - ollama  # No healthcheck condition
+    command: uvicorn app.api:app --host 0.0.0.0 --port 8000 --reload
+
+  streamlit:
+    build: .
+    ports:
+      - "8501:8501"
+    environment:
+      - EMBEDDING_MODEL=${EMBEDDING_MODEL}
+      - VECTOR_DB_PATH=${VECTOR_DB_PATH}
+      - LLM_MODEL=${LLM_MODEL}
+      - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+      - MAX_DOCS=${MAX_DOCS}
+      - MAX_PAGES_PER_DOC=${MAX_PAGES_PER_DOC}
+      - CHUNK_SIZE=${CHUNK_SIZE}
+      - CHUNK_OVERLAP=${CHUNK_OVERLAP}
+    volumes:
+      - app_data:/app/data
+    depends_on:
+      - fastapi
+    command: streamlit run streamlit_app.py --server.port 8501 --server.address 0.0.0.0
+
+volumes:
+  ollama_data:
+  app_data:
