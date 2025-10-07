@@ -9,7 +9,7 @@ Python 3.12 (for local development, optional)
 
 Local Installation
 
-Clone the Repository
+Clone the Repository :
 git clone https://github.com/deepanshiacharya/RAG-Document-QA.git
 cd RAG-Document-QA
 
@@ -29,20 +29,6 @@ FastAPI Docs: http://localhost:8000/docs
 
 
 
-Cloud Deployment
-
-Use a platform like AWS ECS, Heroku, or Render.
-Push the Docker image to a registry (e.g., Docker Hub) and deploy using the repository.
-
-
-
-Testing
-
-Run unit and integration tests:python -m unittest tests.py
-
-
-Ensure Docker is running for integration tests to access the API.
-
 Configuration Details for Using Different LLM Providers
 
 Default Provider: Ollama with llama3:latest model (configured via ollama serve).
@@ -51,7 +37,6 @@ Edit .env file (create if not present) with:OLLAMA_BASE_URL=http://127.0.0.1:114
 LLM_PROVIDER=ollama
 MODEL_NAME=llama3:latest
 
-
 For other providers (e.g., Hugging Face):
 Install required packages in requirements.txt (e.g., transformers).
 Update .env:LLM_PROVIDER=huggingface
@@ -59,8 +44,5 @@ HF_API_KEY=your_hf_api_key
 MODEL_NAME=meta-llama/Llama-3-8B
 
 
-
-
 Modify app/api.py to switch providers based on LLM_PROVIDER environment variable.
-
 
