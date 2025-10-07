@@ -48,6 +48,6 @@ Modify app/api.py to switch providers based on LLM_PROVIDER environment variable
 
 
 
-https://github.com/deepanshiacharya/RAG-Document-QA/blob/master/DeepanshiAcharya.mp4
+[https://github.com/deepanshiacharya/RAG-Document-QA/blob/master/DeepanshiAcharya.mp4](https://github.com/user-attachments/assets/5aa897ac-0608-4099-9054-3ec0a3b4c7a8)
 
 
